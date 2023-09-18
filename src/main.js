@@ -1,8 +1,19 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.config.productionTip = false
+import vuetify from "@/plugins/vuetify";
+import router from "@/plugins/router";
+import i18n from "@/plugins/i18n";
+
+import App from "./App.vue";
+
+Vue.use(VueRouter);
+
+Vue.config.productionTip = false;
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  vuetify,
+  router,
+  i18n,
+  render: (h) => h(App),
+}).$mount("#app");
