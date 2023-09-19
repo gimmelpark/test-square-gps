@@ -1,4 +1,4 @@
-# untitled
+# Test task for SquareGPS
 
 ## Project setup
 
