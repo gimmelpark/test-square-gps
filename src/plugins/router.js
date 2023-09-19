@@ -2,7 +2,7 @@ import VueRouter from "vue-router";
 import Vue from "vue";
 
 import TaskInfoView from "@/views/task-info/TaskInfoView";
-import MapView from "@/views/map/component/MapView"
+import MapView from "@/views/map/component/MapView";
 
 Vue.use(VueRouter);
 
