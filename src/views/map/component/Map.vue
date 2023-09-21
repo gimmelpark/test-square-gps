@@ -1,17 +1,30 @@
 <template>
   <div class="map-container" :class="{ 'adding-mode': isAddingMode }">
-    <div id="map" />
+    <div ref="map" id="map" />
 
     <div class="map-controls">
-      <VBtn fab tile small @click="onZoomClick(true)">
+      <VBtn
+        fab
+        tile
+        small
+        :disabled="disableZoomPlusButton"
+        @click="onZoomClick(true)"
+      >
         <VIcon>mdi-plus</VIcon>
       </VBtn>
 
-      <VBtn class="mt-2" fab tile small @click="onZoomClick(false)">
+      <VBtn
+        class="mt-2"
+        fab
+        tile
+        small
+        :disabled="disableZoomMinusButton"
+        @click="onZoomClick(false)"
+      >
         <VIcon>mdi-minus</VIcon>
       </VBtn>
 
-      <VBtn class="mt-2" icon small @click="onCurrentPositionButtonClick">
+      <VBtn class="mt-2" icon small @click="centerOnCurrentPosition">
         <VIcon>mdi-crosshairs-gps</VIcon>
       </VBtn>
     </div>
@@ -36,8 +49,14 @@
 <script>
 import debounce from "lodash.debounce";
 
-import { createMap, setCurrentLocation } from "../etc/map.utils";
-
+import {
+  addClickInteraction,
+  createMap,
+  selectFeatureById,
+  setCurrentLocation,
+  setViewLocation,
+  updateMapPoints,
+} from "../etc/map.utils";
 import {
   MAX_ZOOM,
   MIN_ZOOM,
@@ -45,8 +64,16 @@ import {
 } from "../etc/map.constants";
 
 export default {
+  props: {
+    selectedPointId: {
+      type: Number,
+      default: undefined,
+    },
+  },
+
   data: () => ({
     map: undefined,
+    interaction: undefined,
     zoom: 0,
     isAddingMode: false,
   }),
@@ -59,26 +86,54 @@ export default {
     mapPoints() {
       return this.$store.state.map.mapPoints;
     },
+
+    disableZoomPlusButton() {
+      return this.zoom >= MAX_ZOOM;
+    },
+
+    disableZoomMinusButton() {
+      return this.zoom <= MIN_ZOOM;
+    },
+  },
+
+  watch: {
+    mapPoints(points) {
+      updateMapPoints(this.map, points);
+    },
+
+    selectedPointId(pointId) {
+      this.selectAndCenterOnFeature(pointId);
+    },
+
+    isAddingMode(value) {
+      this.interaction.setActive(!value);
+    },
   },
 
   mounted() {
-    this.map = createMap();
-
-    this.map.on("click", this.onMapClick);
-
-    this.map
-      .getView()
-      .on("change:resolution", debounce(this.onResolutionUpdate, 100));
-
-    setCurrentLocation(this.map).then(() => {
-      this.zoom = this.map.getView().getZoom();
-    });
+    this.initMap();
   },
 
   methods: {
+    initMap() {
+      this.map = createMap();
+
+      this.interaction = addClickInteraction(this.map);
+
+      this.interaction.on("select", this.onPointSelect);
+
+      this.map.on("click", this.onMapClick);
+      this.map.on("pointermove", this.onMapPointerMove);
+
+      this.map
+        .getView()
+        .on("change:resolution", debounce(this.onResolutionUpdate, 100));
+
+      this.zoom = this.map.getView().getZoom();
+    },
+
     onMapClick(event) {
       if (this.isAddingMode && !this.isLoading) {
-        console.log(this.mapPoints.length + 1);
         const newMarker = {
           coords: event.coordinate,
           title: this.$t("new-marker-title", {
@@ -91,6 +146,13 @@ export default {
           this.$store.dispatch("map/fetchMapPoints");
         });
       }
+    },
+
+    onMapPointerMove(event) {
+      const isCursorPointer =
+        !this.isAddingMode && this.map.hasFeatureAtPixel(event.pixel);
+
+      this.$refs.map.style.cursor = isCursorPointer ? "pointer" : "";
     },
 
     onAddingModeButtonClick() {
@@ -111,8 +173,27 @@ export default {
       this.map.getView().setZoom(this.zoom);
     },
 
-    onCurrentPositionButtonClick() {
+    onPointSelect(event) {
+      const selectedId = event.selected?.[0]?.getId();
+
+      this.$emit("update-selected-point", selectedId);
+    },
+
+    centerOnCurrentPosition() {
       setCurrentLocation(this.map);
+    },
+
+    centerOnPointById(pointId) {
+      const point = this.mapPoints.find(({ id }) => id === pointId);
+
+      if (point?.coords) {
+        setViewLocation(this.map, point.coords);
+      }
+    },
+
+    selectAndCenterOnFeature(pointId) {
+      this.centerOnPointById(pointId);
+      selectFeatureById(this.interaction, pointId);
     },
   },
 };

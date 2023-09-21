@@ -1,5 +1,3 @@
-//118
-
 class FakeBackend {
   static #localStorageKey = "fakeApiData";
 
@@ -42,6 +40,30 @@ class FakeBackend {
     });
   }
 
+  static get(url, foundId = null) {
+    return this.#doRequest((resolve, reject) => {
+      if (!url) {
+        reject(this.#getErrorResponse());
+      }
+
+      const allData = this.#getAllData();
+
+      const data = allData[url] ?? [];
+
+      if (foundId === null) {
+        resolve(this.#getResponse(data));
+      } else {
+        const foundItem = data.find(({ id }) => foundId === id);
+
+        if (foundItem) {
+          resolve(this.#getResponse(foundItem));
+        } else {
+          reject(this.#getResponse("Not found", 404));
+        }
+      }
+    });
+  }
+
   static post(url, addedItem) {
     return this.#doRequest((resolve, reject) => {
       if (!url || !addedItem) {
@@ -77,27 +99,27 @@ class FakeBackend {
     });
   }
 
-  static get(url, foundId = null) {
+  static put(url, updatedItem) {
     return this.#doRequest((resolve, reject) => {
-      if (!url) {
+      if (!url || !updatedItem) {
         reject(this.#getErrorResponse());
       }
 
       const allData = this.#getAllData();
 
-      const data = allData[url] ?? [];
+      if (allData[url] && Array.isArray(allData[url])) {
+        allData[url] = allData[url].map((item) => {
+          if (item.id === updatedItem.id) {
+            return updatedItem;
+          }
 
-      if (foundId === null) {
-        resolve(this.#getResponse(data));
-      } else {
-        const foundItem = data.find(({ id }) => foundId === id);
-
-        if (foundItem) {
-          resolve(this.#getResponse(foundItem));
-        } else {
-          reject(this.#getResponse("Not found", 404));
-        }
+          return item;
+        });
       }
+
+      this.#setAllData(allData);
+
+      resolve(this.#getResponse(updatedItem));
     });
   }
 

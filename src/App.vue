@@ -43,28 +43,30 @@ import i18n, { locales } from "@/plugins/i18n";
 export default {
   data: () => ({
     locales,
+    currentLocale: undefined,
   }),
 
-  computed: {
-    currentLocale() {
-      return i18n.locale;
-    },
+  created() {
+    this.currentLocale = localStorage.getItem("currentLocale");
+
+    if (!this.currentLocale) {
+      this.currentLocale = i18n.locale;
+    } else {
+      i18n.locale = this.currentLocale;
+    }
   },
 
   methods: {
     onLocaleClick(code) {
       if (this.currentLocale !== code) {
+        this.currentLocale = code;
         i18n.locale = code;
+        localStorage.setItem("currentLocale", code);
       }
     },
   },
 };
 </script>
-
-<style scoped lang="scss">
-.active {
-}
-</style>
 
 <i18n>
 {

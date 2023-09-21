@@ -5,9 +5,16 @@ import { fromLonLat } from "ol/proj";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { Point } from "ol/geom";
-import { Icon, Style, Circle, Stroke } from "ol/style";
+import { Style, Circle, Stroke } from "ol/style";
+import { Select } from "ol/interaction";
 
-import { DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM } from "./map.constants";
+import {
+  DEFAULT_ZOOM,
+  MIN_ZOOM,
+  MAX_ZOOM,
+  DEFAULT_POINT_COLOR,
+  ACTIVE_POINT_COLOR,
+} from "./map.constants";
 
 export const createMap = () => {
   return new Map({
@@ -26,21 +33,21 @@ export const createMap = () => {
       minZoom: MIN_ZOOM,
     }),
   });
-
-  // // console.log(map.getControls());
-  //
-  // // map.getControls().forEach()
-  //
-  // addListeners(map, eventListeners);
-
-  // return map;
 };
 
-// const addListeners = (map, eventListeners = []) => {
-//   eventListeners.forEach(({ eventName, listener }) => {
-//     map.on(eventName, listener);
-//   });
-// };
+export const addClickInteraction = (map) => {
+  const select = new Select({
+    style: getFeatureStyle(ACTIVE_POINT_COLOR),
+  });
+
+  map.addInteraction(select);
+
+  return select;
+};
+
+export const setViewLocation = (map, coords) => {
+  map.getView().setCenter(coords);
+};
 
 export const setCurrentLocation = (map) => {
   return new Promise((resolve, reject) => {
@@ -51,7 +58,7 @@ export const setCurrentLocation = (map) => {
           position.coords.latitude,
         ]);
 
-        map.getView().setCenter(center);
+        setViewLocation(map, center);
         map.getView().setZoom(DEFAULT_ZOOM);
 
         resolve();
@@ -62,45 +69,71 @@ export const setCurrentLocation = (map) => {
   });
 };
 
-export const addPoint = (map, coords, color = "#0B27E7") => {
-  const feature = new Feature(new Point(coords));
+export const selectFeatureById = (interaction, id) => {
+  const feature = getVectorSource(interaction.getMap())
+    ?.getFeatures()
+    ?.find((feature) => feature.getId() === id);
 
-  // const img = new Image(16, 16);
-  // img.src = 'src/assets/map-marker.svg'
+  interaction.getFeatures().clear();
 
-  // feature.setStyle(
-  //   new Style({
-  //     image: new Icon({
-  //       color,
-  //       img,
-  //       // src: MAP_MARKER_SVG,
-  //       scale: 0.2,
-  //       anchor: [0.5, 1],
-  //       anchorXUnits: "fraction",
-  //       anchorYUnits: "fraction",
-  //     }),
-  //   }),
-  // );
+  if (feature) {
+    interaction.getFeatures().push(feature);
+  }
+};
 
-  feature.setStyle(
-    new Style({
-      image: new Circle({
-        radius: 8,
-        stroke: new Stroke({
-          width: 8,
-          color,
-        }),
-      }),
-    }),
-  );
-
-  const vectorSource = map
+const getVectorSource = (map) => {
+  return map
     .getLayers()
     ?.getArray()
     ?.find((layer) => layer instanceof VectorLayer)
     ?.getSource();
+};
 
-  if (vectorSource) {
-    vectorSource.addFeature(feature);
+const getFeatureStyle = (color = DEFAULT_POINT_COLOR) => {
+  return new Style({
+    image: new Circle({
+      radius: 8,
+      stroke: new Stroke({
+        width: 8,
+        color,
+      }),
+    }),
+  });
+};
+
+const getFeatureByPoint = ({ coords, id }) => {
+  const feature = new Feature(new Point(coords));
+
+  feature.setId(id);
+
+  feature.setStyle(getFeatureStyle());
+
+  return feature;
+};
+
+export const updateMapPoints = (map, pointsList = []) => {
+  const vectorSource = getVectorSource(map);
+  const features = vectorSource?.getFeatures();
+
+  if (!features) {
+    return;
   }
+
+  const pointListIds = pointsList.map(({ id }) => id);
+  const addedFeaturesIds = features.map((feature) => feature.getId());
+
+  const featuresToRemove = features.filter(
+    (feature) => !pointListIds.includes(feature.getId()),
+  );
+  const pointsToAdd = pointsList.filter(
+    (point) => !addedFeaturesIds.includes(point.id),
+  );
+
+  featuresToRemove.forEach((feature) => {
+    vectorSource.removeFeature(feature);
+  });
+
+  pointsToAdd.forEach((point) => {
+    vectorSource.addFeature(getFeatureByPoint(point));
+  });
 };

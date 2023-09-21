@@ -1,8 +1,15 @@
 <template>
   <div class="map-view">
-    <MapSidebar />
+    <MapSidebar
+      :selected-point-id="selectedPointId"
+      @update-selected-point="onUpdateSelectedPoint"
+    />
 
-    <Map />
+    <Map
+      ref="map"
+      :selected-point-id="selectedPointId"
+      @update-selected-point="onUpdateSelectedPoint"
+    />
   </div>
 </template>
 
@@ -14,6 +21,33 @@ export default {
   components: {
     MapSidebar,
     Map,
+  },
+
+  computed: {
+    selectedPointId() {
+      return +this.$route.query.mapPointId;
+    },
+  },
+
+  created() {
+    this.$store.dispatch("map/fetchMapPoints").then(() => {
+      if (this.selectedPointId) {
+        this.$refs.map.selectAndCenterOnFeature(this.selectedPointId);
+      } else {
+        this.$refs.map.centerOnCurrentPosition();
+      }
+    });
+  },
+
+  methods: {
+    onUpdateSelectedPoint(id) {
+      if (id !== this.selectedPointId) {
+        this.$router.push({
+          name: this.$route.name,
+          query: id ? { mapPointId: id } : undefined,
+        });
+      }
+    },
   },
 };
 </script>

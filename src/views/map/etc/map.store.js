@@ -54,6 +54,18 @@ const mapStore = {
         });
     },
 
+    updateMapPoint({ commit }, point) {
+      commit("setIsLoading", true);
+
+      return FakeBackend.put(FAKE_BACKEND_URL, point)
+        .catch(({ error }) => {
+          window.alert(error);
+        })
+        .finally(() => {
+          commit("setIsLoading", false);
+        });
+    },
+
     removeMapPoint({ commit }, id) {
       commit("setIsLoading", true);
 

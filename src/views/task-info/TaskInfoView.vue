@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-center">
-    <VSheet class="mt-5 py-10 px-16" width="1000">
+    <VSheet class="my-5 py-10 px-16" width="1000">
       <div class="text-h4">
         {{ $t("titles.title-1") }}
       </div>
