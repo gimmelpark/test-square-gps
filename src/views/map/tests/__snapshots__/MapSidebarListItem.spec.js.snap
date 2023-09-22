@@ -1,0 +1,427 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MapSidebarListItem common should match snapshot in editing mode 1`] = `
+<vlistitem-stub
+  activeclass=""
+  tag="div"
+>
+  <vlistitemcontent-stub
+    tag="div"
+  >
+    <vlistitemtitle-stub
+      class="d-flex align-center"
+      tag="div"
+    >
+      <vbtn-stub
+        activeclass=""
+        class="mr-3 my-5"
+        icon="true"
+        tag="button"
+        type="button"
+        xsmall="true"
+      >
+        <vicon-stub>
+          mdi-content-save
+        </vicon-stub>
+      </vbtn-stub>
+       
+      <vtextfield-stub
+        backgroundcolor=""
+        clearicon="$clear"
+        dense="true"
+        errorcount="1"
+        errormessages=""
+        loaderheight="2"
+        messages=""
+        rules=""
+        successmessages=""
+        type="text"
+        value=""
+      />
+    </vlistitemtitle-stub>
+     
+    <vlistitemsubtitle-stub
+      class="text-wrap"
+      tag="div"
+    >
+      
+      qwe
+    
+    </vlistitemsubtitle-stub>
+  </vlistitemcontent-stub>
+   
+  <vlistitemaction-stub>
+    <vbtn-stub
+      activeclass=""
+      color="red"
+      icon="true"
+      tag="button"
+      type="button"
+    >
+      <vicon-stub>
+        mdi-close
+      </vicon-stub>
+    </vbtn-stub>
+  </vlistitemaction-stub>
+</vlistitem-stub>
+`;
+
+exports[`MapSidebarListItem common should match snapshots with default props 1`] = `
+<vlistitem-stub
+  activeclass=""
+  tag="div"
+>
+  <vlistitemcontent-stub
+    tag="div"
+  >
+    <vlistitemtitle-stub
+      class="d-flex align-center"
+      tag="div"
+    >
+      <vbtn-stub
+        activeclass=""
+        class="mr-3 my-5"
+        icon="true"
+        tag="button"
+        type="button"
+        xsmall="true"
+      >
+        <vicon-stub>
+          mdi-pencil
+        </vicon-stub>
+      </vbtn-stub>
+       
+      <div>
+        
+        asd
+      
+      </div>
+    </vlistitemtitle-stub>
+     
+    <vlistitemsubtitle-stub
+      class="text-wrap"
+      tag="div"
+    >
+      
+      qwe
+    
+    </vlistitemsubtitle-stub>
+  </vlistitemcontent-stub>
+   
+  <vlistitemaction-stub>
+    <vbtn-stub
+      activeclass=""
+      color="red"
+      icon="true"
+      tag="button"
+      type="button"
+    >
+      <vicon-stub>
+        mdi-close
+      </vicon-stub>
+    </vbtn-stub>
+  </vlistitemaction-stub>
+</vlistitem-stub>
+`;
+
+exports[`MapSidebarListItem common should match snapshots with isLoading: true 1`] = `
+<vlistitem-stub
+  activeclass=""
+  tag="div"
+>
+  <vlistitemcontent-stub
+    tag="div"
+  >
+    <vlistitemtitle-stub
+      class="d-flex align-center"
+      tag="div"
+    >
+      <vbtn-stub
+        activeclass=""
+        class="mr-3 my-5"
+        disabled="true"
+        icon="true"
+        tag="button"
+        type="button"
+        xsmall="true"
+      >
+        <vicon-stub>
+          mdi-pencil
+        </vicon-stub>
+      </vbtn-stub>
+       
+      <div>
+        
+        asd
+      
+      </div>
+    </vlistitemtitle-stub>
+     
+    <vlistitemsubtitle-stub
+      class="text-wrap"
+      tag="div"
+    >
+      
+      qwe
+    
+    </vlistitemsubtitle-stub>
+  </vlistitemcontent-stub>
+   
+  <vlistitemaction-stub>
+    <vbtn-stub
+      activeclass=""
+      color="red"
+      disabled="true"
+      icon="true"
+      tag="button"
+      type="button"
+    >
+      <vicon-stub>
+        mdi-close
+      </vicon-stub>
+    </vbtn-stub>
+  </vlistitemaction-stub>
+</vlistitem-stub>
+`;
+
+exports[`MapSidebarListItem common snapshots with default props 1`] = `
+<vlistitem-stub
+  activeclass=""
+  tag="div"
+>
+  <vlistitemcontent-stub
+    tag="div"
+  >
+    <vlistitemtitle-stub
+      class="d-flex align-center"
+      tag="div"
+    >
+      <vbtn-stub
+        activeclass=""
+        class="mr-3 my-5"
+        icon="true"
+        tag="button"
+        type="button"
+        xsmall="true"
+      >
+        <vicon-stub>
+          mdi-pencil
+        </vicon-stub>
+      </vbtn-stub>
+       
+      <div>
+        
+        asd
+      
+      </div>
+    </vlistitemtitle-stub>
+     
+    <vlistitemsubtitle-stub
+      class="text-wrap"
+      tag="div"
+    >
+      
+      qwe
+    
+    </vlistitemsubtitle-stub>
+  </vlistitemcontent-stub>
+   
+  <vlistitemaction-stub>
+    <vbtn-stub
+      activeclass=""
+      color="red"
+      icon="true"
+      tag="button"
+      type="button"
+    >
+      <vicon-stub>
+        mdi-close
+      </vicon-stub>
+    </vbtn-stub>
+  </vlistitemaction-stub>
+</vlistitem-stub>
+`;
+
+exports[`MapSidebarListItem snapshots snapshot in editing mode 1`] = `
+<vlistitem-stub
+  activeclass=""
+  tag="div"
+>
+  <vlistitemcontent-stub
+    tag="div"
+  >
+    <vlistitemtitle-stub
+      class="d-flex align-center"
+      tag="div"
+    >
+      <vbtn-stub
+        activeclass=""
+        class="mr-3 my-5"
+        icon="true"
+        tag="button"
+        type="button"
+        xsmall="true"
+      >
+        <vicon-stub>
+          mdi-content-save
+        </vicon-stub>
+      </vbtn-stub>
+       
+      <vtextfield-stub
+        backgroundcolor=""
+        clearicon="$clear"
+        dense="true"
+        errorcount="1"
+        errormessages=""
+        loaderheight="2"
+        messages=""
+        rules=""
+        successmessages=""
+        type="text"
+        value=""
+      />
+    </vlistitemtitle-stub>
+     
+    <vlistitemsubtitle-stub
+      class="text-wrap"
+      tag="div"
+    >
+      
+      qwe
+    
+    </vlistitemsubtitle-stub>
+  </vlistitemcontent-stub>
+   
+  <vlistitemaction-stub>
+    <vbtn-stub
+      activeclass=""
+      color="red"
+      icon="true"
+      tag="button"
+      type="button"
+    >
+      <vicon-stub>
+        mdi-close
+      </vicon-stub>
+    </vbtn-stub>
+  </vlistitemaction-stub>
+</vlistitem-stub>
+`;
+
+exports[`MapSidebarListItem snapshots snapshot with default props 1`] = `
+<vlistitem-stub
+  activeclass=""
+  tag="div"
+>
+  <vlistitemcontent-stub
+    tag="div"
+  >
+    <vlistitemtitle-stub
+      class="d-flex align-center"
+      tag="div"
+    >
+      <vbtn-stub
+        activeclass=""
+        class="mr-3 my-5"
+        icon="true"
+        tag="button"
+        type="button"
+        xsmall="true"
+      >
+        <vicon-stub>
+          mdi-pencil
+        </vicon-stub>
+      </vbtn-stub>
+       
+      <div>
+        
+        asd
+      
+      </div>
+    </vlistitemtitle-stub>
+     
+    <vlistitemsubtitle-stub
+      class="text-wrap"
+      tag="div"
+    >
+      
+      qwe
+    
+    </vlistitemsubtitle-stub>
+  </vlistitemcontent-stub>
+   
+  <vlistitemaction-stub>
+    <vbtn-stub
+      activeclass=""
+      color="red"
+      icon="true"
+      tag="button"
+      type="button"
+    >
+      <vicon-stub>
+        mdi-close
+      </vicon-stub>
+    </vbtn-stub>
+  </vlistitemaction-stub>
+</vlistitem-stub>
+`;
+
+exports[`MapSidebarListItem snapshots snapshot with isLoading: true 1`] = `
+<vlistitem-stub
+  activeclass=""
+  tag="div"
+>
+  <vlistitemcontent-stub
+    tag="div"
+  >
+    <vlistitemtitle-stub
+      class="d-flex align-center"
+      tag="div"
+    >
+      <vbtn-stub
+        activeclass=""
+        class="mr-3 my-5"
+        disabled="true"
+        icon="true"
+        tag="button"
+        type="button"
+        xsmall="true"
+      >
+        <vicon-stub>
+          mdi-pencil
+        </vicon-stub>
+      </vbtn-stub>
+       
+      <div>
+        
+        asd
+      
+      </div>
+    </vlistitemtitle-stub>
+     
+    <vlistitemsubtitle-stub
+      class="text-wrap"
+      tag="div"
+    >
+      
+      qwe
+    
+    </vlistitemsubtitle-stub>
+  </vlistitemcontent-stub>
+   
+  <vlistitemaction-stub>
+    <vbtn-stub
+      activeclass=""
+      color="red"
+      disabled="true"
+      icon="true"
+      tag="button"
+      type="button"
+    >
+      <vicon-stub>
+        mdi-close
+      </vicon-stub>
+    </vbtn-stub>
+  </vlistitemaction-stub>
+</vlistitem-stub>
+`;
